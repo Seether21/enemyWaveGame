@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc0oniw3p7iay"]
+
+[ext_resource type="PackedScene" uid="uid://fci2i00fsxmc" path="res://Scenes/Player/player.tscn" id="1_5ajgg"]
+[ext_resource type="PackedScene" uid="uid://wcyp043rfp" path="res://Scenes/game_objects/game_camera/game_camera.tscn" id="1_sglsi"]
+[ext_resource type="PackedScene" uid="uid://27ok5f5tvh5m" path="res://Scenes/game_objects/Tilemaps/ground_generation.tscn" id="1_vcsga"]
+
+[node name="Main" type="Node"]
+
+[node name="GroundGeneration" parent="." instance=ExtResource("1_vcsga")]
+loaded_chunk_height = 4
+loaded_chunk_wdith = 4
+
+[node name="GameCamera" parent="." instance=ExtResource("1_sglsi")]
+zoom = Vector2(2, 2)
+
+[node name="Player" parent="." instance=ExtResource("1_5ajgg")]

@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://fci2i00fsxmc"]
+
+[ext_resource type="Texture2D" uid="uid://cyqmepcptlvfl" path="res://Scenes/Player/images/OverworkedVillagerIdleSide.png" id="1_00r0e"]
+[ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_k7mhg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n7yvm"]
+radius = 7.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hr5m"]
+atlas = ExtResource("1_00r0e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7m1s"]
+atlas = ExtResource("1_00r0e")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60lef"]
+atlas = ExtResource("1_00r0e")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f06j3"]
+atlas = ExtResource("1_00r0e")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djvue"]
+atlas = ExtResource("1_00r0e")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e11kg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hr5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7m1s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60lef")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hr5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hr5m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hr5m")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f06j3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djvue")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_k7mhg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_n7yvm")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
+position = Vector2(1, -8)
+sprite_frames = SubResource("SpriteFrames_e11kg")
+animation = &"walk"
+autoplay = "idle"
+frame_progress = 0.993765
