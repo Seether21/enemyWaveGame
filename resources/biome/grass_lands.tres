@@ -7,8 +7,8 @@
 script = ExtResource("2_acckg")
 start_tile_atlas_id = 1
 start_tile_atlas_index = Vector2i(1, 1)
+terrain_set = 0
 terrain_id = 0
-terrain = 0
 layer = 0
 
 [resource]

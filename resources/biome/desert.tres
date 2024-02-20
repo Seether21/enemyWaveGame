@@ -7,8 +7,8 @@
 script = ExtResource("3_et3is")
 start_tile_atlas_id = 1
 start_tile_atlas_index = Vector2i(13, 9)
-terrain_id = 1
-terrain = 0
+terrain_set = 1
+terrain_id = 0
 layer = 0
 
 [resource]

@@ -19,7 +19,9 @@ func _ready():
 	biome_loader()
 	if chunk_dictionary.size() == 0:
 		chunk_loader(Vector2i.ZERO)
+	add_layer(get_layers_count())
 	selection_layer = get_layers_count()-1
+	set_layer_name(selection_layer, "selection_layer")
 
 
 func biome_loader():
@@ -28,7 +30,7 @@ func biome_loader():
 		layer_dictionary["ground_base"] = 0
 		add_layer(1)
 		set_layer_name(1, "ground_stitch")
-		layer_dictionary["ground_stitch"] = 0
+		layer_dictionary["ground_stitch"] = 1
 	var has_scatter = false
 	for biome in biome_list:
 		biome.load_tables()
@@ -72,6 +74,7 @@ func get_adjusted_biome_weights(neighbor_biomes: Dictionary):
 			adjusted_weight += current_biome.percentage_chance
 	return adjusted_weight/100
 
+
 func look_at_neighbor_chunks(current_chunk: Vector2i):
 	var neighbor_vectors = {
 		"north" : current_chunk + Vector2i(0,-1),
@@ -88,6 +91,7 @@ func look_at_neighbor_chunks(current_chunk: Vector2i):
 	for direction in cardinal_directions:
 		if chunk_dictionary.has(neighbor_vectors[direction]):
 			cardinal_neighbors[direction] =  neighbor_vectors[direction]
+			print(direction)
 	return cardinal_neighbors
 	
 
@@ -102,46 +106,107 @@ func chunk_loader(starting_chunk: Vector2i):
 				current_terrain = current_biome.terrain_table.pick_item()
 			else:
 				current_terrain = current_biome.terrain_table.pick_item([],current_terrain, 10)
-			var cord_list = generate_chunk(current_terrain.layer,current_chunk * 16, current_terrain.start_tile_atlas_id,\
-				current_terrain.start_tile_atlas_index, current_terrain.terrain_id, current_terrain.terrain)
+			var neighbors = look_at_neighbor_chunks(current_chunk)
+			var ending_directions: Array[Vector2i] = []
+			if neighbors.size() > 0:
+				for key in neighbors.keys():
+					if chunk_dictionary.has(neighbors[key]):
+						if chunk_dictionary[neighbors[key]]["biome"] != current_biome:
+							ending_directions.append(current_chunk - neighbors[key])
+			var cord_list = generate_chunk(current_terrain, current_chunk * 16, ending_directions)
+			
 			chunk_dictionary[current_chunk] = {
 				"biome" : current_biome,
 				"terrain": current_terrain,
 				"tile_cords" : cord_list
 			}
-			var neighbors = look_at_neighbor_chunks(current_chunk)
-			if neighbors.size() > 0:
-				for key in neighbors.keys():
-					#if neighbors[key].x != 0 && neighbors[key].y != 0:
-						#pass
-					#else:
-						if chunk_dictionary[neighbors[key]]["biome"] != current_biome:
-							sticth(current_chunk, neighbors[key], current_terrain)
 
 
-func generate_chunk(layer: int, starting_tile: Vector2i, starting_tile_source_id: int, starting_tile_atlas_id: Vector2i, terrain_set_id: int, terrain: int):
+func generate_chunk(terrain: Terrain, start_cord: Vector2i, biome_end_direction: Array[Vector2i]):
 	var chunk_layers: Array
-	for x in chunk_size:
-		for y in chunk_size:
-			var current_cell = starting_tile + Vector2i(x,y)
-			set_cell(layer,starting_tile,starting_tile_source_id,starting_tile_atlas_id)
+	var layer = layer_dictionary["ground_base"] 
+	var atlas_id = terrain.start_tile_atlas_id
+	var atlas_index = terrain.start_tile_atlas_index
+	
+	chunk_layers = lay_terrain(layer, start_cord, atlas_id, atlas_index, chunk_size, chunk_size)
+	
+	if biome_end_direction.size() > 0:
+		var stitch_cords: Array
+		layer = layer_dictionary["ground_stitch"]
+		for direction in biome_end_direction:
+			if direction.x != 0 && direction.y != 0:
+				continue
+			var stitch_start = start_cord
+			var stitch_to = start_cord
+			var temp_stitch_start = start_cord
+			var stitch_to_x = 0
+			var stitch_to_y = 0
+			var stitch_path = []
+			if direction.x > 0:
+				temp_stitch_start.x += (chunk_size)
+				stitch_to = temp_stitch_start
+				stitch_to.y += chunk_size
+				while temp_stitch_start.y != stitch_to.y:
+					stitch_path.append(temp_stitch_start)
+					temp_stitch_start.y += 1
+				stitch_start.x += (chunk_size-1)
+				stitch_to_x = 1
+				stitch_to_y = chunk_size
+				atlas_index = Vector2i(13,1)
+			elif direction.y > 0:
+				temp_stitch_start.y += (chunk_size)
+				stitch_to = temp_stitch_start
+				stitch_to.x += chunk_size
+				while temp_stitch_start.x != stitch_to.x:
+					stitch_path.append(temp_stitch_start)
+					temp_stitch_start.x += 1
+				stitch_start.y += (chunk_size-1)
+				stitch_to_x = chunk_size
+				stitch_to_y = 1
+				atlas_index = Vector2i(13,5)
+			elif direction.x < 0:
+				temp_stitch_start.x +=1
+				stitch_to = temp_stitch_start
+				stitch_to.y += chunk_size
+				while temp_stitch_start.y != stitch_to.y:
+					stitch_path.append(temp_stitch_start)
+					temp_stitch_start.y += 1
+				stitch_start.x += 1
+				stitch_to_x = 1
+				stitch_to_y = chunk_size
+				atlas_index = Vector2i(1,9)
+			elif direction.y < 0:
+				temp_stitch_start.y += 1
+				stitch_to = temp_stitch_start
+				stitch_to.x += chunk_size
+				while temp_stitch_start.x != stitch_to.x:
+					stitch_path.append(temp_stitch_start)
+					stitch_start.x += 1
+				stitch_start.y += 1
+				stitch_to_x = chunk_size
+				stitch_to_y = 1
+				atlas_index = Vector2i(19,5)
+					
+			if stitch_path.size() > 0:
+				stitch_cords = lay_terrain(layer,stitch_start, atlas_id, atlas_index, stitch_to_x,stitch_to_y)
+				stitch_path.append(stitch_to)
+				set_cells_terrain_path(layer,stitch_path,terrain.terrain_set,terrain.terrain_id,false)	
+#			stitch_cords.reverse()
+#			set_cells_terrain_connect(layer, stitch_cords, terrain.terrain_set, terrain.terrain_id, false)
+			
+
+func lay_terrain(layer: int, start_cord: Vector2i, atlas_id, atlas_index, size_x, size_y):
+	var chunk_layers: Array
+	for x in size_x:
+		for y in size_y:
+			var current_cell = start_cord + Vector2i(x,y)
+			set_cell(layer, current_cell,atlas_id, atlas_index)
 			chunk_layers.append(current_cell)
-	set_cells_terrain_connect(layer, chunk_layers,terrain_set_id,terrain)
 	return chunk_layers
 
 
 func sticth(current_chunk: Vector2i, neighbor: Vector2i, current_terrain: Terrain):
-	var stitch_direction = (current_chunk - neighbor)
-	var stitched_cords_array: Array = []
-	for x in chunk_size:
-		for y in chunk_size:
-			var stitch_cords = (current_chunk * chunk_size) + Vector2i(x,y)			
-			stitch_cords = stitch_cords - stitch_direction
-			set_cell(layer_dictionary["ground_stitch"], stitch_cords, current_terrain.start_tile_atlas_id,\
-			current_terrain.start_tile_atlas_index)
-			#stitched_cords_array.append(stitch_cords)
-			
-	#set_cells_terrain_connect(layer_dictionary["ground_stitch"], stitched_cords_array,current_terrain.terrain_id,current_terrain.terrain)
+	pass
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
