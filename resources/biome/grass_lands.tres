@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=4 format=3 uid="uid://chapvg3kvavt8"]
+
+[ext_resource type="Script" path="res://resources/biome/biome.gd" id="1_63gft"]
+[ext_resource type="Script" path="res://resources/biome/terrain.gd" id="2_acckg"]
+
+[sub_resource type="Resource" id="Resource_bwl3n"]
+script = ExtResource("2_acckg")
+start_tile_atlas_id = 1
+start_tile_atlas_index = Vector2i(1, 1)
+terrain_id = 0
+terrain = 0
+layer = 0
+
+[resource]
+script = ExtResource("1_63gft")
+id = "grass_lands_n"
+biome_name = "Grass Lands"
+percentage_chance = 10
+connecting_biomes_id = Array[String](["desert"])
+terrains = Array[ExtResource("2_acckg")]([SubResource("Resource_bwl3n")])
+terrain_percent_chance = Array[int]([10])
+terrain_scatter = Array[Resource("res://resources/biome/terrainscatter.gd")]([])
+terrain_scatter_chance = Array[int]([])

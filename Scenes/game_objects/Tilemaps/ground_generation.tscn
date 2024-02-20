@@ -1,11 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://27ok5f5tvh5m"]
+[gd_scene load_steps=2 format=3 uid="uid://27ok5f5tvh5m"]
 
-[ext_resource type="TileSet" uid="uid://dapanard415lh" path="res://resources/Tilemap/basic.tres" id="1_ht5w6"]
 [ext_resource type="Script" path="res://Scenes/game_objects/Tilemaps/ground_generation.gd" id="2_jr2e4"]
 
 [node name="GroundGeneration" type="TileMap"]
-tile_set = ExtResource("1_ht5w6")
 format = 2
-layer_1/tile_data = PackedInt32Array()
-layer_2/tile_data = PackedInt32Array()
 script = ExtResource("2_jr2e4")
