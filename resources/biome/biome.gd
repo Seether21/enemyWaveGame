@@ -6,6 +6,8 @@ class_name Biome
 @export var biome_name: String
 @export var percentage_chance: int = 1
 @export var connecting_biomes_id: Array[String]
+@export var min_size: int = 3
+@export var max_size: int = 20
 var non_connecting_biomes: Array[Biome]
 
 

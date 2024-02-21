@@ -1,0 +1,19 @@
+[gd_scene load_steps=7 format=3 uid="uid://dc0oniw3p7iay"]
+
+[ext_resource type="PackedScene" uid="uid://fci2i00fsxmc" path="res://Scenes/Player/player.tscn" id="1_5ajgg"]
+[ext_resource type="PackedScene" uid="uid://wcyp043rfp" path="res://Scenes/game_objects/game_camera/game_camera.tscn" id="1_sglsi"]
+[ext_resource type="PackedScene" uid="uid://27ok5f5tvh5m" path="res://Scenes/game_objects/Tilemaps/ground_generation.tscn" id="1_vcsga"]
+[ext_resource type="TileSet" uid="uid://dapanard415lh" path="res://resources/Tilemap/basic.tres" id="2_4my8w"]
+[ext_resource type="Resource" uid="uid://chapvg3kvavt8" path="res://resources/biome/grass_lands.tres" id="3_8n1si"]
+[ext_resource type="Resource" uid="uid://cw4udd5imr5go" path="res://resources/biome/desert.tres" id="4_4mb1u"]
+
+[node name="Main" type="Node"]
+
+[node name="GroundGeneration" parent="." instance=ExtResource("1_vcsga")]
+tile_set = ExtResource("2_4my8w")
+biome_list = Array[Resource("res://resources/biome/biome.gd")]([ExtResource("3_8n1si"), ExtResource("4_4mb1u")])
+
+[node name="GameCamera" parent="." instance=ExtResource("1_sglsi")]
+zoom = Vector2(2, 2)
+
+[node name="Player" parent="." instance=ExtResource("1_5ajgg")]

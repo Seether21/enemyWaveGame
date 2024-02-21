@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @onready var visuals = $Visuals
 
-@export var base_speed: int = 50
-@export var base_acceleration: float = 5 
+@export var base_speed: int = 125
+@export var base_acceleration: float = 20
 
 
 
