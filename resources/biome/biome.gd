@@ -1,36 +1,26 @@
 extends Resource
-class_name Biome
+class_name  Biome
 
-#Biome Details
+@export_group("Generail Settings")
 @export var id: String
-@export var biome_name: String
-@export var percentage_chance: int = 1
-@export var connecting_biomes_id: Array[String]
-@export var min_size: int = 3
-@export var max_size: int = 20
-var non_connecting_biomes: Array[Biome]
+@export var name: String
+
+@export_group("Generation Settings")
+#altitude of 0 is sea level
+@export_range(-1, 1, .01) var alt_min: float = 0
+@export_range(-1, 1, .01) var alt_max: float = 0
+#temp of 0 is freezing
+@export_range(-1, 1, .01) var temp_min: float = 0
+@export_range(-1, 1, .01) var temp_max: float = 0
+#moisture of 0 is 50%
+@export_range(-1, 1, .01) var moist_min: float = 0
+@export_range(-1, 1, .01) var moist_max: float = 0
 
 
-#Generation Details
-@export var terrains: Array[Terrain]
-@export var terrain_percent_chance: Array[int]
-var terrain_table: WeightedTable = WeightedTable.new()
+@export_group("Tile info")
+@export var atlas_id: int = 0
+@export var atlas_coordinates: Vector2i = Vector2i(0,0)
+@export_range(0, 1, .01) var scatter_chance: float = 0.0
 
-#Vegetation Details
-@export var terrain_scatter: Array[TerrainScatter]
-@export var terrain_scatter_chance: Array[int]
-var terrain_scatter_table: WeightedTable = WeightedTable.new()
-
-
-func load_tables():
-	if terrains.size() != 0:
-		var i: int = 0
-		while i < terrains.size():
-			terrain_table.add_item(terrains[i], terrain_percent_chance[i])
-			i += 1
-	if terrain_scatter.size() != 0:
-		var i: int = 0
-		while i < terrain_scatter.size():
-			terrain_scatter_table.add_item(terrain_scatter[i], terrain_scatter_chance[i])
-			i += 1
-
+@export_group("Terrain Scatter")
+@export var scatter: Array[TerrainScatter]

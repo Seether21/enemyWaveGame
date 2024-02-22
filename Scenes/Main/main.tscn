@@ -1,19 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://dc0oniw3p7iay"]
+[gd_scene load_steps=12 format=3 uid="uid://dc0oniw3p7iay"]
 
 [ext_resource type="PackedScene" uid="uid://fci2i00fsxmc" path="res://Scenes/Player/player.tscn" id="1_5ajgg"]
 [ext_resource type="PackedScene" uid="uid://wcyp043rfp" path="res://Scenes/game_objects/game_camera/game_camera.tscn" id="1_sglsi"]
 [ext_resource type="PackedScene" uid="uid://27ok5f5tvh5m" path="res://Scenes/game_objects/Tilemaps/ground_generation.tscn" id="1_vcsga"]
-[ext_resource type="TileSet" uid="uid://dapanard415lh" path="res://resources/Tilemap/basic.tres" id="2_4my8w"]
-[ext_resource type="Resource" uid="uid://chapvg3kvavt8" path="res://resources/biome/grass_lands.tres" id="3_8n1si"]
-[ext_resource type="Resource" uid="uid://cw4udd5imr5go" path="res://resources/biome/desert.tres" id="4_4mb1u"]
+[ext_resource type="TileSet" uid="uid://w13h2e4ab7li" path="res://resources/biome/biome.tres" id="2_0dejj"]
+[ext_resource type="Resource" uid="uid://bfq8h5jbe6wpg" path="res://resources/biome/beach.tres" id="3_nhju7"]
+[ext_resource type="Resource" uid="uid://d1vm4oiiclf0q" path="res://resources/biome/desert.tres" id="4_4mb1u"]
+[ext_resource type="Resource" uid="uid://b5nx0qcruw4pi" path="res://resources/biome/grass_land.tres" id="5_hq6qj"]
+[ext_resource type="Resource" uid="uid://c4jdo1btgkex2" path="res://resources/biome/jungle.tres" id="6_45git"]
+[ext_resource type="Resource" uid="uid://dg8nlvi0o4vvv" path="res://resources/biome/mountain.tres" id="7_1dwof"]
+[ext_resource type="Resource" uid="uid://d0oc8bme5c6bu" path="res://resources/biome/snow.tres" id="8_um1by"]
+[ext_resource type="Resource" uid="uid://cvub8jy8pqvdr" path="res://resources/biome/water.tres" id="9_q3sej"]
 
 [node name="Main" type="Node"]
 
-[node name="GroundGeneration" parent="." instance=ExtResource("1_vcsga")]
-tile_set = ExtResource("2_4my8w")
-biome_list = Array[Resource("res://resources/biome/biome.gd")]([ExtResource("3_8n1si"), ExtResource("4_4mb1u")])
+[node name="WorldGenerator" parent="." instance=ExtResource("1_vcsga")]
+tile_set = ExtResource("2_0dejj")
+biome_list = Array[Resource("res://resources/biome/biome.gd")]([ExtResource("3_nhju7"), ExtResource("4_4mb1u"), ExtResource("5_hq6qj"), ExtResource("6_45git"), ExtResource("7_1dwof"), ExtResource("8_um1by"), ExtResource("9_q3sej")])
 
 [node name="GameCamera" parent="." instance=ExtResource("1_sglsi")]
-zoom = Vector2(2, 2)
+zoom = Vector2(0.5, 0.5)
 
 [node name="Player" parent="." instance=ExtResource("1_5ajgg")]

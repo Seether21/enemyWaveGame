@@ -1,25 +1,18 @@
-[gd_resource type="Resource" script_class="Biome" load_steps=4 format=3 uid="uid://cw4udd5imr5go"]
+[gd_resource type="Resource" script_class="Biome" load_steps=2 format=3 uid="uid://d1vm4oiiclf0q"]
 
 [ext_resource type="Script" path="res://resources/biome/biome.gd" id="1_ukc4g"]
-[ext_resource type="Script" path="res://resources/biome/terrain.gd" id="3_et3is"]
-
-[sub_resource type="Resource" id="Resource_dglid"]
-script = ExtResource("3_et3is")
-start_tile_atlas_id = 1
-start_tile_atlas_index = Vector2i(13, 9)
-terrain_set = 1
-terrain_id = 0
-layer = 0
 
 [resource]
 script = ExtResource("1_ukc4g")
 id = "desert"
-biome_name = "Desert"
-percentage_chance = 10
-connecting_biomes_id = Array[String](["grass_lands_n"])
-min_size = 10
-max_size = 20
-terrains = Array[ExtResource("3_et3is")]([SubResource("Resource_dglid")])
-terrain_percent_chance = Array[int]([10])
-terrain_scatter = Array[Resource("res://resources/biome/terrainscatter.gd")]([])
-terrain_scatter_chance = Array[int]([])
+name = "Desert"
+alt_min = 0.2
+alt_max = 0.6
+temp_min = 0.6
+temp_max = 0.8
+moist_min = -0.8
+moist_max = 0.0
+atlas_id = 0
+atlas_coordinates = Vector2i(0, 0)
+scatter_chance = 0.0
+scatter = Array[Resource("res://resources/biome/terrain_scatter.gd")]([])

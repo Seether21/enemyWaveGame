@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Biome" load_steps=2 format=3 uid="uid://c4jdo1btgkex2"]
+
+[ext_resource type="Script" path="res://resources/biome/biome.gd" id="1_5l535"]
+
+[resource]
+script = ExtResource("1_5l535")
+id = "jungle"
+name = "Jungle"
+alt_min = 0.3
+alt_max = 0.7
+temp_min = 0.6
+temp_max = 0.8
+moist_min = 0.2
+moist_max = 0.8
+atlas_id = 0
+atlas_coordinates = Vector2i(0, 0)
+scatter_chance = 0.0
+scatter = Array[Resource("res://resources/biome/terrain_scatter.gd")]([])

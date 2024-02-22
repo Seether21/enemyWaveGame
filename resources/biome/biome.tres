@@ -1,0 +1,34 @@
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://w13h2e4ab7li"]
+
+[ext_resource type="Texture2D" uid="uid://buhxbxysq0dav" path="res://resources/biome/WorldBiomes.png" id="1_yerbc"]
+[ext_resource type="Texture2D" uid="uid://cnd3w8pq7xldg" path="res://resources/Tilemap/Tile_Selection.png" id="2_a3so7"]
+[ext_resource type="Texture2D" uid="uid://cpfagtcosayux" path="res://resources/Tilemap/Selected_Chunk 256X256.png" id="3_pnaox"]
+[ext_resource type="Texture2D" uid="uid://cbhfm0t0hd3r1" path="res://resources/Tilemap/ChunkView256X256.png" id="4_smvoo"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6obgg"]
+texture = ExtResource("1_yerbc")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_06h4r"]
+texture = ExtResource("2_a3so7")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7i1l2"]
+texture = ExtResource("3_pnaox")
+0:0/size_in_atlas = Vector2i(16, 16)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lvr2j"]
+texture = ExtResource("4_smvoo")
+0:0/size_in_atlas = Vector2i(16, 16)
+0:0/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_6obgg")
+sources/1 = SubResource("TileSetAtlasSource_06h4r")
+sources/2 = SubResource("TileSetAtlasSource_7i1l2")
+sources/3 = SubResource("TileSetAtlasSource_lvr2j")

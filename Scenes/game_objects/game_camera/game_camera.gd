@@ -25,9 +25,9 @@ func _input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-					zoom += Vector2(1,1)
+					zoom += Vector2(.5,.5)
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				if zoom - Vector2(1,1) == Vector2.ZERO:
+				if zoom - Vector2(.5,.5) <= Vector2.ZERO:
 					return
 				else:
-					zoom -= Vector2(1,1)
+					zoom -= Vector2(.5,.5)
